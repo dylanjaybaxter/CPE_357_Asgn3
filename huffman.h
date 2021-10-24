@@ -94,3 +94,7 @@ void decodeBody(int fdin, int fdout, codeIndex* codeInd, int total);
 
 /*Sum of all chars*/
 int sumFreqs(int* freqs);
+
+int isOneChar(int* freqs);
+
+void writeSingleChar(int fdin, int unique, int sum);

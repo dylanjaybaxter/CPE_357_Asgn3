@@ -445,7 +445,7 @@ int* parseHeader(int fdin){
         exit(EXIT_FAILURE);
     }
     ucount++;
-    
+
     /*Read entire header*/
     int headerSize = ucount*5;
     uint8_t buff[headerSize];
@@ -476,6 +476,26 @@ int sumFreqs(int* freqs){
         sum = sum + freqs[i];
     }
     return sum;
+}
+
+/*Sum freqs*/
+int isOneChar(int* freqs){
+    int ind = 0;
+    int found = 0;
+    int i;
+    /*Return index if one char, -1 if not*/
+    for(i = 0; i<256;i++){
+        if(freqs[i] != 0){
+            if(found == 0){
+                found = 1;
+                ind = i;
+            }
+            else{
+                return -1;
+            }
+        }
+    }
+    return ind;
 }
 
 /*Decode Body of file*/
@@ -525,10 +545,23 @@ void decodeBody(int fdin, int fdout, codeIndex* codeInd, int total){
                 code = code*2;
             }
         }
-        /*Write Remaining buffer*/
-        if(write(fdout,&writeBuff, writeBuffCount) < 0){
-            perror("Final writeBuff");
-            exit(EXIT_FAILURE);
-        }
+
+    }
+    /*Write Remaining buffer*/
+    if(write(fdout,&writeBuff, writeBuffCount) < 0){
+        perror("Final writeBuff");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void writeSingleChar(int fdout, int unique, int num){
+    char writeBuff[num];
+    int i;
+    for(i=0;i<num;i++){
+        writeBuff[i] = unique;
+    }
+    if(write(fdout,&writeBuff, num) < 0){
+        perror("Final writeBuff");
+        exit(EXIT_FAILURE);
     }
 }

@@ -50,8 +50,13 @@ int main(int argc, char* const argv[]){
 
     /*Write decoded test to file*/
     int sum = sumFreqs(freqs);
-    decodeBody(fdin, fdout, codeInd, sum);
-
+    int unique = isOneChar(freqs);
+    if(unique == -1){
+        decodeBody(fdin, fdout, codeInd, sum);
+    }
+    else{
+        writeSingleChar(fdout, unique, sum);
+    }
     /*Close Read file*/
     opt = 0;
     opt = close(fdin);
