@@ -330,6 +330,7 @@ void writeHeader(int fdout, int* hist){
             count++;
         }
     }
+    count--;
     /*Write number chars to file */
     if(write(fdout,&count,1)== -1){
         perror("write count total");
@@ -443,6 +444,8 @@ int* parseHeader(int fdin){
         perror("Read Count Byte");
         exit(EXIT_FAILURE);
     }
+    ucount++;
+    
     /*Read entire header*/
     int headerSize = ucount*5;
     uint8_t buff[headerSize];
