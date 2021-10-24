@@ -49,12 +49,13 @@ int main(int argc, char* const argv[]){
         perror(argv[2]);
         exit(EXIT_FAILURE);
     }
+    if(tree != NULL){
+        /*Write Header*/
+        writeHeader(fdout,freqs);
 
-    /*Write Header*/
-    writeHeader(fdout,freqs);
-
-    /*Write Body*/
-    writeBody(fdin, fdout, codeInd);
+        /*Write Body*/
+        writeBody(fdin, fdout, codeInd);
+    }
 
     /*close write file*/
     fdin = close(fdin);
