@@ -328,7 +328,6 @@ void writeHeader(int fdout, int* hist){
     for(i=0;i<256;i++){
         if(hist[i] != 0){
             count++;
-            printf("%d : %d  %d \n", i, hist[i], count);
         }
     }
     /*Write number chars to file */
