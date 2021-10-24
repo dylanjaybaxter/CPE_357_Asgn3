@@ -41,7 +41,7 @@ int main(int argc, char* const argv[]){
     codeIndex* codeInd = genCodes(tree);
 
     /*Print Codes*/
-    printCodes(codeInd);
+    /*printCodes(codeInd);*/
 
     /*Open Write File*/
     int fdout = open(argv[2], O_WRONLY|O_CREAT, PERMS);
