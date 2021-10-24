@@ -67,5 +67,9 @@ int main(int argc, char* const argv[]){
     }
 
     /*Free Memory*/
+    free(freqs);
+    freeTree(tree);
+    freeIndex(codeInd);
+
     return 0;
 }
