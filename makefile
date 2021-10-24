@@ -25,9 +25,9 @@ debug: hencode hdecode
 run: hencode hdecode
 	./hencode st.txt out.out
 	./hdecode out.out stNew.txt
-valgrind: htable
+valgrind: hencode hdecode
 	valgrind -s --leak-check=full --show-leak-kinds=all ./hencode st.txt ste
-	valgrind -s --leak-check=full --show-leak-kinds=all ./hdecode ste.txt stOut
+	valgrind -s --leak-check=full --show-leak-kinds=all ./hdecode ste stOut
 
 test: htable
 	./htable st.txt > stOut.txt
