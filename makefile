@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g -pg -ansi
+CFLAGS = -Wall -g -ansi
 LD = gcc
 LDFLAGS = -g
 
@@ -29,19 +29,7 @@ valgrind: hencode hdecode
 	valgrind -s --leak-check=full --show-leak-kinds=all ./hencode st.txt ste
 	valgrind -s --leak-check=full --show-leak-kinds=all ./hdecode ste stOut
 
-test: htable
-	./htable st.txt > stOut.txt
-	~pn-cs357/demos/htable st.txt > stSol.txt
-	diff -s stOut.txt stSol.txt
-testman: htable
-	./htable /usr/share/man/*/* > outme.txt
-	~pn-cs357/demos/htable /usr/share/man/*/* > outsol.txt
-	diff -s outme.txt outsol.txt
-testwap: htable
-	./htable WAP.txt > WAPO.txt
-	~pn-cs357/demos/htable WAP.txt > WAPI.txt
-	diff -s WAPO.txt WAPI.txt
-testone: htable
-	./htable oc > ocOut.txt
-	~pn-cs357/demos/htable oc > ocSol.txt
-	diff -s ocOut.txt ocSol.txt
+bintest: hencode hdecode
+	./hencode foo out
+	./hdecode out foo2
+	diff -s foo foo2
