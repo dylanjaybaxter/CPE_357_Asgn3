@@ -212,9 +212,10 @@ int* countFreq(int fdin){
     int c = 0;
     int numRead;
     unsigned char buff[BUFF_SIZE];
+    int j;
     while((numRead = read(fdin, buff, BUFF_SIZE)) > 0){
-        for(i=0;i<numRead;i++){
-            c = buff[i];
+        for(j=0;j<numRead;j++){
+            c = buff[j];
             freqs[c] = freqs[c] + 1;
         }
     }
