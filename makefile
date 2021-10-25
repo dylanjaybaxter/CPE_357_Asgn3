@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g -pg -ansi
 LD = gcc
-LDFLAGS = -g -pg
+LDFLAGS = -g
 
 all: hencode hdecode hencode.o hdecode.o huffman.o
 
