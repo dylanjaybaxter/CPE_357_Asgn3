@@ -35,5 +35,3 @@ bintest: hencode hdecode
 	od -tx1 foo > a
 	od -tx2 foo2 > b
 	diff -s a b
-	rm foo
-	rm foo2
