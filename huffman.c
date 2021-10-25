@@ -445,10 +445,11 @@ int* parseHeader(int fdin){
         perror("Read Count Byte");
         exit(EXIT_FAILURE);
     }
-    ucount++;
+    int ucount2 = (int)ucount;
+    ucount2++;
 
     /*Read entire header*/
-    int headerSize = ((int)ucount)*5;
+    int headerSize = ucount2*5;
     uint8_t buff[headerSize];
     if(read(fdin, &buff, headerSize)==-1){
         perror("Read Count Byte");
