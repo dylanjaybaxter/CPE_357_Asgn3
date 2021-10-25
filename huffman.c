@@ -448,7 +448,7 @@ int* parseHeader(int fdin){
     ucount++;
 
     /*Read entire header*/
-    int headerSize = ucount*5;
+    int headerSize = ((int)ucount)*5;
     uint8_t buff[headerSize];
     if(read(fdin, &buff, headerSize)==-1){
         perror("Read Count Byte");
