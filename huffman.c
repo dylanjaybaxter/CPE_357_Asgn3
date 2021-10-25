@@ -373,8 +373,8 @@ void writeBody(int fdin, int fdout, codeIndex* codeInd){
     while((numRead = read(fdin, buff, BUFF_SIZE)) > 0){
         for(i=0;i<numRead; i++){
             /*Find code for char*/
-            code = codeInd->codes[(int)buff[i]];
-            len = codeInd->lens[(int)buff[i]];
+            code = codeInd->codes[(uint8_t)buff[i]];
+            len = codeInd->lens[(uint8_t)buff[i]];
             /*Write code for char*/
             /*Initialize Comparator*/
             comp = 1;
