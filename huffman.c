@@ -203,7 +203,7 @@ huff_Node* popMin(Node_List* list){
 int* countFreq(int fdin){
     /* Initialize char array */
     int* freqs = (int*)malloc(256*sizeof(int));
-    unint8_t i;
+    uint8_t i;
     for(i = 0; i<256;i++){
         freqs[i] = 0;
     }
