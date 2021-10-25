@@ -44,10 +44,16 @@ int main(int argc, char* const argv[]){
     /*printCodes(codeInd);*/
 
     /*Open Write File*/
-    int fdout = open(argv[2], O_WRONLY|O_CREAT, PERMS);
-    if(fdout == -1){
-        perror(argv[2]);
-        exit(EXIT_FAILURE);
+    int fdout;
+    if(argc > 2){
+        fdout = open(argv[2], O_WRONLY|O_CREAT, PERMS);
+        if(fdout == -1){
+            perror(argv[2]);
+            exit(EXIT_FAILURE);
+        }
+    }
+    else{
+        fdout = 1;
     }
     if(tree != NULL){
         /*Write Header*/
