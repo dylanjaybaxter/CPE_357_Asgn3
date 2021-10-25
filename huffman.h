@@ -11,6 +11,7 @@ huffman.c
 #include<unistd.h>
 #include<getopt.h>
 #define BUFF_SIZE 8192
+#define ALPHABET_SIZE 256
 
 typedef struct huff_Node huff_Node;
 

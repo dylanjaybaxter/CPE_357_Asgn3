@@ -32,10 +32,10 @@ huff_Node* init_Huff_Node(int freq, int c){
 }
 
 codeIndex* init_CodeIndex(){
-    int* codes = (int*)malloc(256*sizeof(int));
-    int* lens = (int*)malloc(256*sizeof(int));
+    int* codes = (int*)malloc(ALPHABET_SIZE*sizeof(int));
+    int* lens = (int*)malloc(ALPHABET_SIZE*sizeof(int));
     int i;
-    for(i = 0; i<256;i++){
+    for(i = 0; i<ALPHABET_SIZE;i++){
         codes[i] = 0;
         lens[i] = 0;
     }
@@ -84,7 +84,7 @@ Node_List* createNodeList(int* freqs){
     Node_List* list = init_Node_List();
     /*Copy over node information*/
     int i = 0;
-    for(;i<256;i++){
+    for(;i<ALPHABET_SIZE;i++){
         /*Insert non zero characters*/
         if(freqs[i] != 0){
             huff_Node* newNode = init_Huff_Node(freqs[i], i);
@@ -202,9 +202,9 @@ huff_Node* popMin(Node_List* list){
 /*Counts Frequency of characters from 0 to 255 and outputs an ordered list*/
 int* countFreq(int fdin){
     /* Initialize char array */
-    int* freqs = (int*)malloc(256*sizeof(int));
+    int* freqs = (int*)malloc(ALPHABET_SIZE*sizeof(int));
     int i;
-    for(i = 0; i<256;i++){
+    for(i = 0; i<ALPHABET_SIZE;i++){
         freqs[i] = 0;
     }
 
@@ -290,7 +290,7 @@ void printCodes(codeIndex* codeInd){
     unsigned int i;
     int j;
     unsigned int comp = 0;
-    for(i=0;i<256;i++){
+    for(i=0;i<ALPHABET_SIZE;i++){
         if(codeInd->lens[i] != 0 ){
             /*Print bits*/
             printf("0x%02x: ", i);
@@ -326,7 +326,7 @@ void writeHeader(int fdout, int* hist){
     uint8_t i8;
     uint32_t ordered = 0;
     uint8_t count = 0;
-    for(i=0;i<256;i++){
+    for(i=0;i<ALPHABET_SIZE;i++){
         if(hist[i] != 0){
             count++;
         }
@@ -338,7 +338,7 @@ void writeHeader(int fdout, int* hist){
         exit(EXIT_FAILURE);
     }
     /*For each unique character in the file */
-    for(i=0;i<256;i++){
+    for(i=0;i<ALPHABET_SIZE;i++){
         if(hist[i] != 0){
             /*write character byte*/
             i8 = (uint8_t)i;
@@ -432,9 +432,9 @@ void writeBody(int fdin, int fdout, codeIndex* codeInd){
 /*Parse Header into Histogram*/
 int* parseHeader(int fdin){
     /*Initialize freqs*/
-    int* freqs = (int*)malloc(256*sizeof(int));
+    int* freqs = (int*)malloc(ALPHABET_SIZE*sizeof(int));
     int i;
-    for(i = 0; i<256;i++){
+    for(i = 0; i<ALPHABET_SIZE;i++){
         freqs[i] = 0;
     }
 
@@ -474,7 +474,7 @@ int* parseHeader(int fdin){
 int sumFreqs(int* freqs){
     int sum = 0;
     int i;
-    for(i = 0; i<256;i++){
+    for(i = 0; i<ALPHABET_SIZE;i++){
         sum = sum + freqs[i];
     }
     return sum;
@@ -486,7 +486,7 @@ int isOneChar(int* freqs){
     int found = 0;
     int i;
     /*Return index if one char, -1 if not*/
-    for(i = 0; i<256;i++){
+    for(i = 0; i<ALPHABET_SIZE;i++){
         if(freqs[i] != 0){
             if(found == 0){
                 found = 1;
@@ -524,7 +524,7 @@ void decodeBody(int fdin, int fdout, codeIndex* codeInd, int total){
                 len++;
 
                 /*check temp code and length against code index*/
-                for(k=0;k<256;k++){
+                for(k=0;k<ALPHABET_SIZE;k++){
                     if((code == codeInd->codes[k])&&(len == codeInd->lens[k])){
                             /*if code is found reset temp code and len*/
                             code = 0;
