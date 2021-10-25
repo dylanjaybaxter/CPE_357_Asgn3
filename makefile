@@ -32,4 +32,8 @@ valgrind: hencode hdecode
 bintest: hencode hdecode
 	./hencode foo out
 	./hdecode out foo2
-	diff -s foo foo2
+	od -tx1 foo > a
+	od -tx2 foo2 > b
+	diff -s a b
+	rm foo
+	rm foo2
