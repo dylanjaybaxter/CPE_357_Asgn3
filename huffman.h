@@ -96,6 +96,8 @@ void decodeBody(int fdin, int fdout, codeIndex* codeInd, int total);
 /*Sum of all chars*/
 int sumFreqs(int* freqs);
 
+/*Check if only 1 char in histogram and return it if so*/
 int isOneChar(int* freqs);
 
+/*Write single char case output to file*/
 void writeSingleChar(int fdin, int unique, int sum);

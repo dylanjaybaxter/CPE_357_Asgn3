@@ -14,6 +14,10 @@ huffman encoding and decoding
 /*------------------------- Constructors---------------------------*/
 Node_List* init_Node_List(){
     Node_List* list = (Node_List*)malloc(sizeof(Node_List));
+    if(list == NULL){
+        perror("Malloc");
+        exit(EXIT_FAILURE);
+    }
     list->items = 0;
     list->head = NULL;
     list->tail = NULL;
@@ -22,6 +26,10 @@ Node_List* init_Node_List(){
 
 huff_Node* init_Huff_Node(int freq, int c){
     huff_Node* newNode = (huff_Node*)malloc(sizeof(huff_Node));
+    if(newNode == NULL){
+        perror("Malloc");
+        exit(EXIT_FAILURE);
+    }
     newNode->freq = freq;
     newNode->c = c;
     newNode->prev = NULL;
@@ -34,12 +42,20 @@ huff_Node* init_Huff_Node(int freq, int c){
 codeIndex* init_CodeIndex(){
     int* codes = (int*)malloc(ALPHABET_SIZE*sizeof(int));
     int* lens = (int*)malloc(ALPHABET_SIZE*sizeof(int));
+    if(codes == NULL || lens == NULL){
+        perror("Malloc");
+        exit(EXIT_FAILURE);
+    }
     int i;
     for(i = 0; i<ALPHABET_SIZE;i++){
         codes[i] = 0;
         lens[i] = 0;
     }
     codeIndex* index = (codeIndex*)malloc(sizeof(codeIndex));
+    if(index == NULL){
+        perror("Malloc");
+        exit(EXIT_FAILURE);
+    }
     index->codes = codes;
     index->lens = lens;
     return index;
@@ -369,7 +385,7 @@ void writeBody(int fdin, int fdout, codeIndex* codeInd){
     int buffCount = 0; /*Number of bits in buffer*/
     char buff[BUFF_SIZE]; /*buffer for reading chars*/
     int i; /*For loop 1*/
-    int j; /*For loop 1*/
+    int j; /*For loop 2*/
     while((numRead = read(fdin, buff, BUFF_SIZE)) > 0){
         for(i=0;i<numRead; i++){
             /*Find code for char*/
@@ -402,6 +418,7 @@ void writeBody(int fdin, int fdout, codeIndex* codeInd){
                         buffCount = 0;
                     }
                     else{
+                        /*Else prep for next bit*/
                         bitBuff = bitBuff << 1;
                     }
                 }
@@ -480,7 +497,7 @@ int sumFreqs(int* freqs){
     return sum;
 }
 
-/*Sum freqs*/
+/*Check if there is one char in histogram, return it if so*/
 int isOneChar(int* freqs){
     int ind = 0;
     int found = 0;
@@ -502,24 +519,28 @@ int isOneChar(int* freqs){
 
 /*Decode Body of file*/
 void decodeBody(int fdin, int fdout, codeIndex* codeInd, int total){
-    /*Read in buffer*/
+    /*Initialize variables*/
     char readBuff[BUFF_SIZE];
     char writeBuff[BUFF_SIZE];
     int writeBuffCount = 0, bytesWritten = 0;
     int code = 0, len = 0, numRead = 0;
     uint8_t byte = 0, bitMask = 0;
     int i,j,k;
+    int msb = 128;
+    /*Read in buffer*/
     while((numRead = read(fdin, &readBuff, BUFF_SIZE)) > 0){
         /*Read buffer byte by byte*/
         for(i=0;(i<numRead) & (bytesWritten < total);i++){
             byte = readBuff[i];
             /*deconstruct byte bit by bit*/
-            bitMask = 128;
+            /*Initializze bitmask to MSB*/
+            bitMask = msb;
             for(j=0;(j<8) & (bytesWritten < total);j++){
-                /*Add bit to temp code*/
+                /*Add bit to temp code with bitmask*/
                 if(byte & bitMask){
                     code = code + 1;
                 }
+                /*Shift Mask Left and incrment length of code*/
                 bitMask = bitMask/2;
                 len++;
 
@@ -541,9 +562,11 @@ void decodeBody(int fdin, int fdout, codeIndex* codeInd, int total){
                                 }
                                 writeBuffCount = 0;
                             }
+                            /*Stop searching when code is found*/
                             break;
                     }
                 }
+                /*Shift code left for next bit*/
                 code = code*2;
             }
         }

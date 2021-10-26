@@ -24,7 +24,7 @@ int main(int argc, char* const argv[]){
         perror("usage: htable filename");
         exit(EXIT_FAILURE);
     }
-    /*Open Read File*/
+    /*Open Read File, default to stdin if arg is -*/
     int* freqs;
     int fdin, fdout;
     if(*argv[1] != '-'){
@@ -38,7 +38,7 @@ int main(int argc, char* const argv[]){
         fdin = 0;
     }
 
-    /*Open Write File*/
+    /*Open Write File, default to stdout if no arg*/
     if(argv[2]){
         fdout = open(argv[2], O_WRONLY|O_CREAT, PERMS);
         if(fdout == -1){

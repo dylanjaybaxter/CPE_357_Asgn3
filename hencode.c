@@ -23,7 +23,7 @@ int main(int argc, char* const argv[]){
         perror("usage: htable filename");
         exit(EXIT_FAILURE);
     }
-    /* For file*/
+    /*For input file*/
     int* freqs;
     int fdin = open(argv[1], O_RDONLY);
     if(fdin == -1){
@@ -40,10 +40,7 @@ int main(int argc, char* const argv[]){
     /*Generate Codes*/
     codeIndex* codeInd = genCodes(tree);
 
-    /*Print Codes*/
-    /*printCodes(codeInd);*/
-
-    /*Open Write File*/
+    /*Open Write File and default to std*/
     int fdout;
     if(argc > 2){
         fdout = open(argv[2], O_WRONLY|O_CREAT, PERMS);
